@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    background: #020617;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans;
+  }
+
+  ::selection {
+    background: rgba(14, 165, 233, 0.35);
+    color: #f8fafc;
+  }
+
+  * {
+    border-color: theme("colors.line");
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .glow-ring::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.4),
+      rgba(45, 212, 191, 0.15) 40%,
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* -----------------------------------------------------------
+ * PRINT STYLES — used when the /resume page is printed or
+ * saved as PDF. Switches to a clean light theme, hides chrome.
+ * --------------------------------------------------------- */
+@media print {
+  @page {
+    margin: 14mm 12mm;
+    size: A4;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide site chrome and any explicitly print-hidden block */
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Strip cinematic chrome from the resume itself */
+  main section {
+    border: none !important;
+    background: transparent !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  main section .container,
+  main section > div {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Hide the hero's decorative grid background entirely */
+  .resume-hero [aria-hidden="true"] {
+    display: none !important;
+  }
+
+  /* Text + headings switch to ink-on-paper */
+  h1, h2, h3, h4, p, li, span, a {
+    color: #0f172a !important;
+  }
+
+  .text-ink,
+  .text-ink-muted,
+  .text-ink-subtle {
+    color: #0f172a !important;
+  }
+
+  .text-accent {
+    color: #0369a1 !important;
+  }
+
+  .text-teal {
+    color: #0d9488 !important;
+  }
+
+  /* Card surfaces become a soft outlined block */
+  [class*="rounded-2xl"],
+  [class*="rounded-3xl"] {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Tighten font sizes a touch for one-page fit */
+  h1 { font-size: 28pt !important; line-height: 1.1 !important; }
+  h2 { font-size: 14pt !important; line-height: 1.2 !important; }
+  h3 { font-size: 11pt !important; }
+  p, li, span { font-size: 9.5pt !important; line-height: 1.45 !important; }
+  .font-mono { font-size: 7.5pt !important; }
+
+  a { text-decoration: none !important; }
+
+  /* Force every status pill / micro-label to render with ink colour */
+  [class*="bg-bg-raised"],
+  [class*="bg-bg"],
+  [class*="bg-white/"] {
+    background: #ffffff !important;
+  }
+
+  [class*="border-line"],
+  [class*="border-white/"] {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Avoid awkward breaks inside experience entries */
+  ol li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* The print button itself should never appear on paper */
+  button {
+    display: none !important;
+  }
+}
