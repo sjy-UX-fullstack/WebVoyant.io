@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Github, Linkedin, Twitter } from "lucide-react";
-import { Logo } from "./logo";
+import { LogoFull } from "./logo";
 import { Container } from "./container";
 import { site } from "@/content/site";
 import { services } from "@/content/services";
@@ -12,7 +12,7 @@ export function Footer() {
       <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
-            <Logo />
+            <LogoFull />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-muted">
               {site.description}
             </p>

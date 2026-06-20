@@ -25,18 +25,31 @@ export function buildMetadata({
     description: desc,
     metadataBase: new URL(site.url),
     alternates: { canonical: url },
+    icons: {
+      icon: "/logo.png",
+      apple: "/logo.png",
+    },
     openGraph: {
       title: fullTitle,
       description: desc,
       url,
       siteName: site.name,
       type,
+      images: [
+        {
+          url: `${site.url}/og-image.png`,
+          width: 1200,
+          height: 400,
+          alt: "WebVoyant Tech - Websites, Apps & AI Products",
+        },
+      ],
       ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description: desc,
+      images: [`${site.url}/og-image.png`],
     },
     robots: { index: true, follow: true },
   };
