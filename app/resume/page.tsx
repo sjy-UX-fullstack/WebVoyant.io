@@ -88,12 +88,11 @@ const shippedProducts: ShippedProduct[] = [
     url: "https://aadinath-jain-matrimony.vercel.app/",
   },
   {
-    name: "MouriqualAI (client)",
+    name: "Enterprise AI Platform (client)",
     category: "Enterprise SaaS",
     oneLiner:
       "Pixel-perfect enterprise SaaS site shipped from complex Figma in 7 days. Live customer surface.",
     status: "Live",
-    url: "https://mouriqualai.com/",
   },
 ];
 
@@ -106,7 +105,7 @@ const experience = [
     bullets: [
       "Founded an AI-first product studio. Shipped 8 production products in 12 months — solo, end-to-end.",
       "Built ComplianceOS (B2B SaaS), DirectorsCut.ai, VIC Pro, and Mehfil from scratch — architecture, code, deploy.",
-      "Delivered MouriqualAI's pixel-perfect enterprise SaaS site in 7 days from complex Figma.",
+      "Delivered a pixel-perfect enterprise SaaS site for an AI client in 7 days from complex Figma.",
       "Stack: Next.js 14 · TypeScript · Postgres · Supabase · Stripe / Razorpay · Vercel · Claude / GPT APIs.",
     ],
   },

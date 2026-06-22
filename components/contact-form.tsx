@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Send, CheckCircle2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
-const WHATSAPP_NUMBER = "918109745019";
+const WEB3FORMS_KEY = "484c3797-2d02-4605-825b-e70c94130367";
 
 const serviceOptions = [
   "Business Website (₹25K–₹80K)",
@@ -20,7 +20,22 @@ const budgetOptions = [
   "₹50,000 – ₹1,00,000",
   "₹1,00,000 – ₹3,00,000",
   "₹3,00,000+",
+  "$300 – $1,000 (USD)",
+  "$1,000 – $5,000 (USD)",
   "Let's discuss",
+];
+
+const businessTypes = [
+  "Startup / New Business",
+  "Small Business / SMB",
+  "Agency / Consultancy",
+  "E-Commerce / D2C Brand",
+  "Restaurant / Hospitality",
+  "Healthcare / Clinic",
+  "Real Estate",
+  "Education / EdTech",
+  "Enterprise / Corporate",
+  "Other",
 ];
 
 export function ContactForm() {
@@ -28,12 +43,14 @@ export function ContactForm() {
     name: "",
     phone: "",
     email: "",
+    businessType: "",
     service: "",
     budget: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   function handleChange(
     e: React.ChangeEvent<
@@ -43,36 +60,43 @@ export function ContactForm() {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSending(true);
+    setError("");
 
-    // Build the WhatsApp message
-    const lines = [
-      `🔔 *New Lead — WebVoyant*`,
-      ``,
-      `*Name:* ${form.name}`,
-      `*Phone:* ${form.phone}`,
-      form.email ? `*Email:* ${form.email}` : null,
-      `*Service:* ${form.service}`,
-      `*Budget:* ${form.budget}`,
-      form.message ? `*Details:* ${form.message}` : null,
-      ``,
-      `_Sent from webvoyant.io contact form_`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New Lead from ${form.name} — WebVoyant.io`,
+          from_name: "WebVoyant.io",
+          name: form.name,
+          phone: form.phone,
+          email: form.email || "Not provided",
+          business_type: form.businessType,
+          service_needed: form.service,
+          budget_range: form.budget,
+          message: form.message || "No additional details",
+          // Honeypot field — bots fill this, humans don't see it
+          botcheck: "",
+        }),
+      });
 
-    const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(lines)}`;
+      const data = await res.json();
 
-    // Open WhatsApp in background to send the lead
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-
-    // Show success state
-    setTimeout(() => {
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setError("Something went wrong. Please try WhatsApp instead.");
+      }
+    } catch {
+      setError("Network error. Please try WhatsApp instead.");
+    } finally {
       setSending(false);
-      setSubmitted(true);
-    }, 800);
+    }
   }
 
   if (submitted) {
@@ -86,8 +110,7 @@ export function ContactForm() {
         </h2>
         <p className="mt-3 max-w-sm text-sm text-ink-muted">
           Our team will review your requirements and get back to you within 24
-          hours with a free quote. Check your WhatsApp — we&rsquo;ll reach out
-          there first.
+          hours with a free quote. We will reach out via phone or email.
         </p>
         <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-subtle">
           Average response time: 2 hours
@@ -101,6 +124,16 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="rounded-2xl border border-line bg-bg-raised"
     >
+      {/* Honeypot — hidden from humans, bots fill it and get rejected */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        className="hidden"
+        style={{ display: "none" }}
+        tabIndex={-1}
+        autoComplete="off"
+      />
+
       <div className="flex items-center justify-between border-b border-line px-6 py-4">
         <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-muted">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-teal shadow-[0_0_8px_rgba(45,212,191,0.7)]" />
@@ -132,97 +165,125 @@ export function ContactForm() {
           />
         </div>
 
-        {/* Phone */}
-        <div>
-          <label
-            htmlFor="phone"
-            className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
-          >
-            WhatsApp / Phone *
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            required
-            value={form.phone}
-            onChange={handleChange}
-            placeholder="+91 98765 43210"
-            className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink placeholder:text-ink-subtle focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-          />
+        {/* Phone + Email row */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="phone"
+              className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
+            >
+              WhatsApp / Phone *
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="+91 98765 43210"
+              className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink placeholder:text-ink-subtle focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
+            >
+              Email *
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={form.email}
+              onChange={handleChange}
+              placeholder="you@company.com"
+              className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink placeholder:text-ink-subtle focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+          </div>
         </div>
 
-        {/* Email */}
+        {/* Business Type */}
         <div>
           <label
-            htmlFor="email"
+            htmlFor="businessType"
             className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
           >
-            Email (optional)
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="you@company.com"
-            className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink placeholder:text-ink-subtle focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-          />
-        </div>
-
-        {/* Service */}
-        <div>
-          <label
-            htmlFor="service"
-            className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
-          >
-            What do you need? *
+            Business type *
           </label>
           <select
-            id="service"
-            name="service"
+            id="businessType"
+            name="businessType"
             required
-            value={form.service}
+            value={form.businessType}
             onChange={handleChange}
             className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
           >
             <option value="" disabled>
-              Select a service
+              Select your business type
             </option>
-            {serviceOptions.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Budget */}
-        <div>
-          <label
-            htmlFor="budget"
-            className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
-          >
-            Budget range *
-          </label>
-          <select
-            id="budget"
-            name="budget"
-            required
-            value={form.budget}
-            onChange={handleChange}
-            className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-          >
-            <option value="" disabled>
-              Select budget
-            </option>
-            {budgetOptions.map((b) => (
+            {businessTypes.map((b) => (
               <option key={b} value={b}>
                 {b}
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Service + Budget row */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="service"
+              className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
+            >
+              What do you need? *
+            </label>
+            <select
+              id="service"
+              name="service"
+              required
+              value={form.service}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            >
+              <option value="" disabled>
+                Select a service
+              </option>
+              {serviceOptions.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="budget"
+              className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle"
+            >
+              Budget range *
+            </label>
+            <select
+              id="budget"
+              name="budget"
+              required
+              value={form.budget}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-line bg-bg px-4 py-3 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            >
+              <option value="" disabled>
+                Select budget
+              </option>
+              {budgetOptions.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Message */}
@@ -244,6 +305,13 @@ export function ContactForm() {
           />
         </div>
 
+        {/* Error */}
+        {error && (
+          <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+            {error}
+          </p>
+        )}
+
         {/* Submit */}
         <button
           type="submit"
@@ -256,7 +324,7 @@ export function ContactForm() {
           {sending ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Sending...
+              Submitting...
             </>
           ) : (
             <>

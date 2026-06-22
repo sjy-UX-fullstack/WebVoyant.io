@@ -16,12 +16,12 @@ export type CaseStudy = {
 
 export const cases: CaseStudy[] = [
   {
-    slug: "mouriqualai",
-    client: "MouriqualAI",
+    slug: "enterprise-saas-site",
+    client: "Enterprise AI Client",
     vertical: "Enterprise SaaS",
-    headline: "Complex Figma → enterprise SaaS site, shipped in 7 days.",
+    headline: "Complex Figma to enterprise SaaS site, shipped in 7 days.",
     summary:
-      "An AI-powered QA platform with a dense, visual-heavy Figma file and a hard launch deadline. We delivered the production site — animations, dashboards, integration logos, the full storytelling arc — pixel-perfect, in one week.",
+      "An AI-powered enterprise platform with a dense, visual-heavy Figma file and a hard launch deadline. We delivered the production site with animations, dashboards, integration logos, and the full storytelling arc, pixel-perfect, in one week.",
     stack: ["Next.js 14", "Tailwind", "Framer Motion", "Vercel"],
     highlights: [
       { label: "Time to launch", value: "7 days" },
@@ -29,7 +29,7 @@ export const cases: CaseStudy[] = [
       { label: "Lighthouse (Performance)", value: "97" },
     ],
     problem:
-      "MouriqualAI had a polished Figma and a launch window measured in days, not months. They needed a partner who could read complex visual design — animated dashboards, integration grids, metric ribbons — and translate it into a production-grade site without compromise.",
+      "The client had a polished Figma and a launch window measured in days, not months. They needed a partner who could read complex visual design, animated dashboards, integration grids, metric ribbons, and translate it into a production-grade site without compromise.",
     approach: [
       "Set up a Next.js + Tailwind base on Day 1 with the design tokens extracted directly from Figma — colors, spacing, type scale, motion curves.",
       "Built section by section against a live staging URL the team could review every morning.",
@@ -37,8 +37,7 @@ export const cases: CaseStudy[] = [
       "Hardened the build: Lighthouse pass, OG cards, SEO meta, structured data.",
     ],
     outcome:
-      "Live at mouriqualai.com in 7 days. The site became the company's primary surface for enterprise pilot conversations, and the build cost a fraction of what a comparable agency had quoted with a 10-week timeline.",
-    liveUrl: "https://mouriqualai.com",
+      "Shipped in 7 days. The site became the company's primary surface for enterprise pilot conversations, and the build cost a fraction of what a comparable agency had quoted with a 10-week timeline.",
     year: 2026,
   },
   {

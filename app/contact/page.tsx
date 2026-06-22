@@ -60,7 +60,7 @@ export default function ContactPage() {
           <div className="md:col-span-7">
             <ContactForm />
             <p className="mt-4 text-center text-xs text-ink-subtle">
-              Your details are sent directly to our WhatsApp. No spam, no
+              Your details are sent securely to our team. No spam, no
               mailing list, no third parties.
             </p>
           </div>
