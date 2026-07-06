@@ -28,6 +28,7 @@ type ShippedProduct = {
   oneLiner: string;
   status: "Live" | "Early access" | "MVP";
   url?: string;
+  demoNote?: string;
 };
 
 const shippedProducts: ShippedProduct[] = [
@@ -46,6 +47,7 @@ const shippedProducts: ShippedProduct[] = [
       "AI prescription scanner — photograph a prescription, extract medicines, get dose reminders with Hindi voice alerts. Cross-platform (Expo), Play Store ready.",
     status: "Live",
     url: "https://medscript-jade.vercel.app/",
+    demoNote: "Demo access: login with any phone number, OTP 123456",
   },
   {
     name: "VIC Pro",
@@ -70,6 +72,7 @@ const shippedProducts: ShippedProduct[] = [
       "Curated social/dating platform with daily drops, social aura scores, online-to-offline venue integration.",
     status: "Live",
     url: "https://vybe-rosy-six.vercel.app/investor",
+    demoNote: "Demo access: login with any phone number, OTP 123456",
   },
   {
     name: "BiteSwipe",
@@ -567,6 +570,11 @@ function ProductRow({ product }: { product: ShippedProduct }) {
       <p className="mt-3 text-sm leading-relaxed text-ink-muted">
         {product.oneLiner}
       </p>
+      {product.demoNote && (
+        <p className="mt-2 inline-flex w-fit rounded-md border border-accent/20 bg-accent/5 px-2.5 py-1 font-mono text-[11px] text-accent">
+          {product.demoNote}
+        </p>
+      )}
       {product.url && (
         <span className="mt-4 inline-flex items-center gap-1 text-xs text-accent">
           {new URL(product.url).hostname.replace("www.", "")}{" "}
