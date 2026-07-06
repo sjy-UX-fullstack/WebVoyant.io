@@ -18,7 +18,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = buildMetadata({
   title: "Resume — Sanjay Thakur",
   description:
-    "Sanjay Thakur — AI-First Product Engineer · Design Engineer. Shipped 8 production products in 12 months. Founder of WebVoyant.",
+    "Sanjay Thakur — AI-First Product Engineer · Design Engineer. Shipped 10 production products in 12 months. Founder of WebVoyant.",
   path: "/resume",
 });
 
@@ -88,6 +88,22 @@ const shippedProducts: ShippedProduct[] = [
     url: "https://aadinath-jain-matrimony.vercel.app/",
   },
   {
+    name: "Alka Artisanals",
+    category: "E-Commerce",
+    oneLiner:
+      "Full-stack e-commerce storefront with custom admin dashboard and real-time customer order tracking. Built from scratch, no Shopify.",
+    status: "Live",
+    url: "https://alka-artisanals.vercel.app/",
+  },
+  {
+    name: "AI Support Triage",
+    category: "AI Tool · Demo",
+    oneLiner:
+      "Live AI triage system — categorizes support messages, scores urgency, flags escalations, drafts replies. Prompt-injection resistant.",
+    status: "Live",
+    url: "https://ai-support-triage.vercel.app/",
+  },
+  {
     name: "Enterprise AI Platform (client)",
     category: "Enterprise SaaS",
     oneLiner:
@@ -103,7 +119,7 @@ const experience = [
     period: "2025 – Present",
     location: "Remote",
     bullets: [
-      "Founded an AI-first product studio. Shipped 8 production products in 12 months — solo, end-to-end.",
+      "Founded an AI-first product studio. Shipped 10 production products in 12 months — solo, end-to-end.",
       "Built ComplianceOS (B2B SaaS), DirectorsCut.ai, VIC Pro, and Mehfil from scratch — architecture, code, deploy.",
       "Delivered a pixel-perfect enterprise SaaS site for an AI client in 7 days from complex Figma.",
       "Stack: Next.js 14 · TypeScript · Postgres · Supabase · Stripe / Razorpay · Vercel · Claude / GPT APIs.",
@@ -235,7 +251,7 @@ export default function ResumePage() {
               </p>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-muted">
                 Designer + filmmaker turned AI-first product builder. Shipped
-                8 production products in 12 months — solo, AI-accelerated,
+                10 production products in 12 months — solo, AI-accelerated,
                 end-to-end. Founder of{" "}
                 <Link
                   href="/"
@@ -292,7 +308,7 @@ export default function ResumePage() {
         <Container className="py-14 sm:py-16">
           <SectionHeader
             eyebrow="Shipped in 2025–2026"
-            title="Eight production products. Solo. AI-accelerated."
+            title="Ten production products. Solo. AI-accelerated."
             note="Each link below is a working product — not a screenshot."
           />
 
