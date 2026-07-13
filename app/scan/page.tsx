@@ -37,7 +37,7 @@ const industries = [
 ];
 
 const goals = [
-  "More franchise enquiries",
+  "More leads / enquiries",
   "More walk-in customers",
   "Online orders / bookings",
   "Build brand online",
@@ -77,7 +77,7 @@ export default function ScanPage() {
   }
 
   const waLink = `https://wa.me/918109745019?text=${encodeURIComponent(
-    `Hi Sanjay! Met you at Franchise India Indore. I ran the AI scan for ${business || "my business"} — let's claim the free consultation.`,
+    `Hi Sanjay! I ran the AI scan for ${business || "my business"} — let's claim the free consultation.`,
   )}`;
 
   return (

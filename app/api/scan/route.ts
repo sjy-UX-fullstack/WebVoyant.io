@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const SYSTEM_PROMPT = `You are the AI business growth analyst for WebVoyant Tech (webvoyant.io), a web development and AI product studio from India. You are being demoed live at a franchise expo in Indore, India.
+const SYSTEM_PROMPT = `You are the AI business growth analyst for WebVoyant Tech (webvoyant.io), a web development and AI product studio from India.
 
 Given a business name, industry, and primary goal, produce a sharp, specific, instantly-useful digital growth plan for that business. Be concrete and India-market aware. No fluff, no generic advice like "use social media" — every point must be actionable and tied to their industry and goal.
 
@@ -16,7 +16,7 @@ Return STRICT JSON only, no markdown fences:
   "closing_line": "one persuasive sentence inviting them to claim the free Rs 25,000 growth consultation"
 }
 
-Rules: exactly 4 quick_wins, exactly 2-3 what_to_build items. Price ranges: business website Rs 25k-80k, e-commerce Rs 50k-1.5L, web/mobile app Rs 1L-3L, AI product Rs 3L+, franchise lead-gen microsite + ads setup Rs 30k-60k. Keep total response under 350 words.`;
+Rules: exactly 4 quick_wins, exactly 2-3 what_to_build items. Price ranges: business website Rs 25k-80k, e-commerce Rs 50k-1.5L, web/mobile app Rs 1L-3L, AI product Rs 3L+, lead-gen microsite + ads setup Rs 30k-60k. Keep total response under 350 words.`;
 
 export async function POST(req: Request) {
   try {

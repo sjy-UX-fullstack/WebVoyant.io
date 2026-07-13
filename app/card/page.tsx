@@ -19,7 +19,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const WHATSAPP =
-  "https://wa.me/918109745019?text=Hi%20Sanjay!%20Met%20you%20at%20Franchise%20India%20Indore.%20Let%27s%20talk%20about%20my%20business.";
+  "https://wa.me/918109745019?text=Hi%20Sanjay!%20Got%20your%20digital%20card.%20Let%27s%20talk%20about%20my%20business.";
 
 export default function CardPage() {
   return (
@@ -99,15 +99,15 @@ export default function CardPage() {
         </div>
       </div>
 
-      {/* Event offer */}
+      {/* Offer */}
       <div className="mt-5 rounded-2xl border border-teal/30 bg-teal/5 p-5 text-center">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal">
-          Franchise India special
+          Limited-time offer
         </p>
         <p className="mt-2 text-sm leading-relaxed text-ink">
           Free AI business growth consultation worth{" "}
-          <span className="font-semibold">₹25,000</span> — for businesses I
-          meet at the event.
+          <span className="font-semibold">₹25,000</span> — for businesses that
+          connect through this card.
         </p>
       </div>
 
